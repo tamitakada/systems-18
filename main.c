@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main() {
+int plumbing() {
   int pipe_input[2];
   int pipe_output[2];
   
@@ -28,6 +28,8 @@ int main() {
 
     read(pipe_output[0], line, sizeof(line));
     printf("%s", line);
+    
+    plumbing();
   } else {
     close(pipe_input[1]);
     close(pipe_output[0]);
@@ -43,4 +45,8 @@ int main() {
 
     write(pipe_output[1], input, sizeof(input));
   }
+}
+
+int main() {
+  plumbing();
 }
